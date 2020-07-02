@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "671677258140",
+    "firebase_url": "https://trollify-7e3cc.firebaseio.com",
+    "project_id": "trollify-7e3cc",
+    "storage_bucket": "trollify-7e3cc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:671677258140:android:6a420b64b1bfab652f5059",
+        "android_client_info": {
+          "package_name": "com.example.trollify"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "671677258140-01gtlu75oijtbeetn91jabce51sokoim.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQq9K2LlVU_F0SDFuTDVSG2TJnmZ7dW4c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "671677258140-01gtlu75oijtbeetn91jabce51sokoim.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
