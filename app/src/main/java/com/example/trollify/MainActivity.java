@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Home");
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawable_layout);
-        actionBarDrawerToggle = new ActionBarDrawerToggle(MainActivity.this, drawerLayout,R.string.drawer_open,R.string.drawer_close)
+        actionBarDrawerToggle = new ActionBarDrawerToggle(MainActivity.this, drawerLayout,R.string.drawer_open,R.string.drawer_close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -89,4 +89,3 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
-// Waqqas

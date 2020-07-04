@@ -1,5 +1,4 @@
-package com.example.guftagoo;
-
-    import android.app.AlertDialog;import android.content.DialogInterface;import android.os.Bundle;
-
-    import androidx.annotation.NonNull;import androidx.fragment.app.Fragment;import androidx.recyclerview.widget.LinearLayoutManager;
+<?xml version="1.0" encoding="utf-8"?>
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@drawable/ic_launcher_background"/>
+</adaptive-icon>
