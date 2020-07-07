@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     private CircleImageView NavProfileImage;
     private TextView NavProfileUsername;
+    private ImageButton AddNewPostButton;
 
     private FirebaseAuth mAuth;
     private DatabaseReference UsersRef;
@@ -51,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null){
             SendUserToLoginActivity();
-        }else{
+        }
+        else{
             currentUserID = mAuth.getCurrentUser().getUid();
         }
         UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
@@ -59,6 +62,9 @@ public class MainActivity extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.main_page_toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("Home");
+
+        AddNewPostButton = (ImageButton) findViewById(R.id.add_new_post_button);
+
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawable_layout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(MainActivity.this, drawerLayout,R.string.drawer_open,R.string.drawer_close);
@@ -77,11 +83,18 @@ public class MainActivity extends AppCompatActivity {
             {
                 if(snapshot.exists())
                 {
-                    String fullname = snapshot.child("fullname").getValue().toString();
-                    String image = snapshot.child("profileimage").getValue().toString();
+                    if(snapshot.hasChild("fullname")){
+                        String fullname = snapshot.child("fullname").getValue().toString();
+                        NavProfileUsername.setText(fullname);
+                    }
 
-                    NavProfileUsername.setText(fullname);
-                    Picasso.get().load(image).placeholder(R.drawable.profile).into(NavProfileImage);
+                    if(snapshot.hasChild("profileimage")){
+                        String image = snapshot.child("profileimage").getValue().toString();
+                        Picasso.get().load(image).placeholder(R.drawable.profile).into(NavProfileImage);
+                    }
+                    else{
+                        Toast.makeText(MainActivity.this, "Profile name do not exist...", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
@@ -98,6 +111,19 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+
+        AddNewPostButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SendUserToPostActivity();
+            }
+        });
+    }
+
+    private void SendUserToPostActivity() {
+        Intent addNewPostIntent = new Intent(MainActivity.this,PostActivity.class);
+        startActivity(addNewPostIntent);
     }
 
 
@@ -156,6 +182,10 @@ public class MainActivity extends AppCompatActivity {
     {
         switch(item.getItemId())
         {
+            case R.id.nav_post:
+                SendUserToPostActivity();
+                break;
+
             case R.id.nav_profile:
                 Toast.makeText(this, "Profile", Toast.LENGTH_SHORT).show();
                 break;
