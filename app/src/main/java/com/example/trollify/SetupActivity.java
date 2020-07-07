@@ -142,13 +142,17 @@ public class SetupActivity extends AppCompatActivity
 
                 filePath.putFile(resultUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
+                    {
+                        filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>()
+                        {
                             @Override
-                            public void onSuccess(Uri uri) {
+                            public void onSuccess(Uri uri)
+                            {
                                 final String downloadUrl = uri.toString();
                                 UsersRef.child("profileimage").setValue(downloadUrl)
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        .addOnCompleteListener(new OnCompleteListener<Void>()
+                                        {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 if (task.isSuccessful())
