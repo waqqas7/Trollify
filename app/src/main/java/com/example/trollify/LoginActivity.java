@@ -55,7 +55,7 @@ public class  LoginActivity extends AppCompatActivity {
         UserPassword = (EditText) findViewById(R.id.login_password);
         LoginButton = (Button) findViewById(R.id.login_button);
         loadingBar = new ProgressDialog(this);
-        googleSignInButton = (ImageView)findViewById(R.id.google_signin_button);
+        googleSignInButton = (ImageView) findViewById(R.id.google_signin_button);
         NeedNewAccountLink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,7 +107,9 @@ public class  LoginActivity extends AppCompatActivity {
             loadingBar.setMessage("Please wait, while we are allowing you to login to your Google Account...");
             loadingBar.setCanceledOnTouchOutside(true);
             loadingBar.show();
+
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+
             if(result.isSuccess())
             {
                 GoogleSignInAccount account = result.getSignInAccount();
@@ -144,8 +146,6 @@ public class  LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "Not Authenticated : " + message, Toast.LENGTH_SHORT).show();
                             loadingBar.dismiss();
                         }
-
-                        // ...
                     }
                 });
     }
@@ -213,9 +213,9 @@ public class  LoginActivity extends AppCompatActivity {
 
     private void SendUserToLoginActivity()
     {
-        Intent mainIntent = new Intent(LoginActivity.this, LoginActivity.class);
-        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(mainIntent);
+        Intent loginIntent = new Intent(LoginActivity.this, LoginActivity.class);
+        loginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(loginIntent);
         finish();
     }
 

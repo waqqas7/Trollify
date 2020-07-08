@@ -120,77 +120,56 @@ public class PostActivity extends AppCompatActivity {
         saveCurrentDate = currentDate.format(calForDate.getTime());
 
         Calendar calForTime = Calendar.getInstance();
-        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm");
-        saveCurrentTime = currentTime.format(calForDate.getTime());
+        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss");
+        saveCurrentTime = currentTime.format(calForTime.getTime());
 
-        postRandomName = saveCurrentDate + saveCurrentTime;
+        postRandomName = saveCurrentDate+saveCurrentTime;
 
-        final StorageReference filePath = PostsImagesReference.child("Post Images").child(ImageUri.getLastPathSegment() + postRandomName + ".jpg");
+        final StorageReference filepath = PostsImagesReference.child(ImageUri.getLastPathSegment()+postRandomName+".jpg");
 
-        filePath.putFile(ImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        filepath.putFile(ImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
-            {
-                filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                filepath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri)
                     {
                         downloadUrl = uri.toString();
-                        filePath.putFile(ImageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task)
-                                    {
-                                        if(task.isSuccessful())
-                                        {
-                                            Toast.makeText(PostActivity.this, "Image uploaded successfully to Storage...", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PostActivity.this,"Image uploaded",Toast.LENGTH_SHORT).show();
 
-                                            SavingPostInformationToDatabase();
-                                        }
-                                        else
-                                        {
-                                            String message = task.getException().getMessage();
-                                            Toast.makeText(PostActivity.this, "Error occurred : " + message, Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                });
+                        SavingPostInformationToDatabase();
                     }
                 });
             }
         });
     }
 
-    private void SavingPostInformationToDatabase()
-    {
+    private void SavingPostInformationToDatabase() {
         UsersRef.child(current_user_id).addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot)
-            {
-                if(snapshot.exists())
-                {
-                    String userFullName = snapshot.child("fullname").getValue().toString();
-                    String userProfileImage = snapshot.child("profileimage").getValue().toString();
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    String userFullName = dataSnapshot.child("fullname").getValue().toString();
+                    String userProfileImage = dataSnapshot.child("profileimage").getValue().toString();
 
-                    HashMap postsMap = new HashMap();
-                        postsMap.put("uid", current_user_id);
-                        postsMap.put("date", saveCurrentDate);
-                        postsMap.put("time", saveCurrentTime);
-                        postsMap.put("description", Description);
-                        postsMap.put("postimage", downloadUrl);
-                        postsMap.put("profileimage", userProfileImage);
-                        postsMap.put("fullname", userFullName);
-                    PostsRef.child(current_user_id + postRandomName).updateChildren(postsMap)
+                    HashMap postsMap =  new HashMap();
+                    postsMap.put("uid",current_user_id);
+                    postsMap.put("date",saveCurrentDate);
+                    postsMap.put("time",saveCurrentTime);
+                    postsMap.put("description",Description);
+                    postsMap.put("postimage",downloadUrl);
+                    postsMap.put("profileimage",userProfileImage);
+                    postsMap.put("fullname",userFullName);
+                    PostsRef.child(current_user_id+postRandomName).updateChildren(postsMap)
                             .addOnCompleteListener(new OnCompleteListener() {
                                 @Override
-                                public void onComplete(@NonNull Task task)
-                                {
-                                    if (task.isSuccessful())
-                                    {
+                                public void onComplete(@NonNull Task task) {
+                                    if(task.isSuccessful()){
                                         SendUserToMainActivity();
-                                        Toast.makeText(PostActivity.this, "New Post is updated is successfully...", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(PostActivity.this,"Uploaded Post!",Toast.LENGTH_SHORT).show();
                                     }
-                                    else
-                                    {
-                                        Toast.makeText(PostActivity.this, "Error occurred while updating your post.", Toast.LENGTH_SHORT).show();
+                                    else{
+                                        Toast.makeText(PostActivity.this,"Error occurred",Toast.LENGTH_SHORT).show();
                                     }
                                     loadingBar.dismiss();
                                 }
@@ -199,7 +178,7 @@ public class PostActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
