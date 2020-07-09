@@ -158,6 +158,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected void onBindViewHolder(PostsViewHolder viewHolder, int position, Posts model)
             {
+                final String PostKey = getRef(position).getKey();
+
                 viewHolder.setFullname(model.getFullname());
                 viewHolder.setTime(model.getTime());
                 viewHolder.setDate(model.getDate());
@@ -165,6 +167,14 @@ public class MainActivity extends AppCompatActivity {
                 viewHolder.setProfileimage( model.getProfileimage());
                 viewHolder.setPostimage(model.getPostimage());
 
+                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent clickPostIntent = new Intent(MainActivity.this, ClickPostActivity.class);
+                        clickPostIntent.putExtra("PostKey", PostKey);
+                        startActivity(clickPostIntent);
+                    }
+                });
             }
         };
         adapter.startListening();
