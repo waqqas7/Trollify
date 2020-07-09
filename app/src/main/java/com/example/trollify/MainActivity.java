@@ -167,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
                 viewHolder.setProfileimage( model.getProfileimage());
                 viewHolder.setPostimage(model.getPostimage());
 
-                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                viewHolder.mView.setOnClickListener( new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent clickPostIntent = new Intent(MainActivity.this, ClickPostActivity.class);
@@ -327,7 +327,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void SendUserToSettingsActivity()
     {
-        Intent loginIntent = new Intent(MainActivity.this,SettingsActivity.class);
-        startActivity(loginIntent);
+        Intent settingsIntent = new Intent(MainActivity.this,SettingsActivity.class);
+        startActivity(settingsIntent);
     }
 }

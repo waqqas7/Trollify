@@ -41,7 +41,6 @@ public class SetupActivity extends AppCompatActivity
     private CircleImageView ProfileImage;
     private ProgressDialog loadingBar;
 
-
     private FirebaseAuth mAuth;
     private DatabaseReference UsersRef;
     private StorageReference UserProfileImageRef;
@@ -133,8 +132,8 @@ public class SetupActivity extends AppCompatActivity
             {
                 loadingBar.setTitle("Profile Image");
                 loadingBar.setMessage("Please wait, while we are updating your profile image...");
-                loadingBar.show();
                 loadingBar.setCanceledOnTouchOutside(true);
+                loadingBar.show();
 
                 final Uri resultUri = result.getUri();
 

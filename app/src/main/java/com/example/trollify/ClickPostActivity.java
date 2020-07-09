@@ -29,6 +29,7 @@ public class ClickPostActivity extends AppCompatActivity {
     private ImageView PostImage;
     private TextView PostDescription;
     private Button DeletePostButton, EditPostButton;
+
     private DatabaseReference ClickPostRef;
     private FirebaseAuth mAuth;
 
@@ -36,7 +37,8 @@ public class ClickPostActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_click_post);
 
@@ -58,7 +60,8 @@ public class ClickPostActivity extends AppCompatActivity {
         ClickPostRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
+                if(snapshot.exists())
+                {
                     description = snapshot.child("description").getValue().toString();
                     image = snapshot.child("postimage").getValue().toString();
                     databaseUserID = snapshot.child("uid").getValue().toString();
@@ -66,14 +69,17 @@ public class ClickPostActivity extends AppCompatActivity {
                     PostDescription.setText(description);
                     Picasso.get().load(image).into(PostImage);
 
-                    if(currentUserID.equals(databaseUserID)){
+                    if(currentUserID.equals(databaseUserID))
+                    {
                         DeletePostButton.setVisibility(View.VISIBLE);
                         EditPostButton.setVisibility(View.VISIBLE);
                     }
 
-                    EditPostButton.setOnClickListener(new View.OnClickListener() {
+                    EditPostButton.setOnClickListener(new View.OnClickListener()
+                    {
                         @Override
-                        public void onClick(View view) {
+                        public void onClick(View view)
+                        {
                             EditCurrentPost(description);
                         }
                     });
@@ -86,15 +92,18 @@ public class ClickPostActivity extends AppCompatActivity {
             }
         });
 
-        DeletePostButton.setOnClickListener(new View.OnClickListener() {
+        DeletePostButton.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View view) {
+            public void onClick(View view)
+            {
                 DeleteCurrentPost();
             }
         });
     }
 
-    private void EditCurrentPost(String description) {
+    private void EditCurrentPost(String description)
+    {
         AlertDialog.Builder builder = new AlertDialog.Builder(ClickPostActivity.this);
         builder.setTitle("Edit Post:");
         final EditText inputField = new EditText(ClickPostActivity.this);
@@ -103,7 +112,8 @@ public class ClickPostActivity extends AppCompatActivity {
 
         builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+            public void onClick(DialogInterface dialogInterface, int i)
+            {
                 ClickPostRef.child("description").setValue(inputField.getText().toString());
                 Toast.makeText(ClickPostActivity.this, "Post Edited Successfully", Toast.LENGTH_SHORT).show();
             }
@@ -111,7 +121,8 @@ public class ClickPostActivity extends AppCompatActivity {
 
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
+            public void onClick(DialogInterface dialogInterface, int i)
+            {
                 dialogInterface.cancel();
             }
         });
@@ -121,7 +132,8 @@ public class ClickPostActivity extends AppCompatActivity {
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.holo_green_light);
     }
 
-    private void DeleteCurrentPost() {
+    private void DeleteCurrentPost()
+    {
         ClickPostRef.removeValue();
         SendUserToMainActivity();
         Toast.makeText(this, "Post has been deleted", Toast.LENGTH_SHORT).show();

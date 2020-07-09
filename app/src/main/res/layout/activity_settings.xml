@@ -8,7 +8,9 @@
     tools:context=".SettingsActivity">
 
     <include android:id="@+id/settings_toolbar"
-        layout="@layout/app_bar_layout"></include>
+        layout="@layout/app_bar_layout">
+
+    </include>
 
     <ScrollView
         android:layout_width="match_parent"
