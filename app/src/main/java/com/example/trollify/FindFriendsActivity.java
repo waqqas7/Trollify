@@ -46,7 +46,7 @@ public class FindFriendsActivity extends AppCompatActivity
         mToolbar = (Toolbar) findViewById(R.id.find_friends_appbar_layout);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Update Post");
+        getSupportActionBar().setTitle("Find Friends");
 
         SearchResultList = (RecyclerView)findViewById(R.id.search_result_list);
         SearchResultList.setHasFixedSize(true);
@@ -75,14 +75,15 @@ public class FindFriendsActivity extends AppCompatActivity
         Query searchPeopleandFriendsQuery = allUsersDatabaseRef.orderByChild("fullname")
                 .startAt(searchBoxInput).endAt(searchBoxInput + "\uf8ff");
 
-        FirebaseRecyclerOptions<FindFriends> options = new FirebaseRecyclerOptions.Builder<FindFriends>()
-            .setQuery(searchPeopleandFriendsQuery,FindFriends.class)
-            .build();
+        FirebaseRecyclerOptions<FindFriends> options =
+                new FirebaseRecyclerOptions.Builder<FindFriends>()
+                        .setQuery(searchPeopleandFriendsQuery, FindFriends.class)
+                        .build();
 
         FirebaseRecyclerAdapter adapter = new FirebaseRecyclerAdapter<FindFriends, FindFriendsViewHolder>(options)
         {
             @Override
-            public FindFriendsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+            public FindFriendsViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
             {
                 View view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.all_users_display_layout, parent, false);
@@ -99,6 +100,7 @@ public class FindFriendsActivity extends AppCompatActivity
             }
 
         };
+        adapter.startListening();
         SearchResultList.setAdapter(adapter);
     }
 
@@ -106,7 +108,8 @@ public class FindFriendsActivity extends AppCompatActivity
     {
         View mView;
 
-        public FindFriendsViewHolder(@NonNull View itemView) {
+        public FindFriendsViewHolder(@NonNull View itemView)
+        {
             super(itemView);
             mView = itemView;
         }

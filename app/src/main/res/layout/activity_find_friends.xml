@@ -15,7 +15,7 @@
     <RelativeLayout
         android:id="@+id/myLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:layout_below="@+id/find_friends_appbar_layout">
 
@@ -33,10 +33,10 @@
         <EditText
             android:id="@+id/search_box_input"
             android:layout_width="280dp"
-            android:layout_height="70dp"
+            android:layout_height="50dp"
             android:layout_below="@+id/simpleTextID"
             android:layout_alignParentStart="true"
-            android:layout_marginLeft="21dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/inputs"
             android:ems="10"
@@ -49,10 +49,13 @@
         <ImageButton
             android:id="@+id/search_people_friends_button"
             android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_height="50dp"
             android:layout_marginTop="10dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
             android:layout_below="@+id/simpleTextID"
             android:layout_toEndOf="@+id/search_box_input"
+            android:layout_marginStart="5dp"
             android:background="@drawable/inputs"
             android:src="@drawable/search"/>
 

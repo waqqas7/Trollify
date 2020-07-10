@@ -146,9 +146,11 @@ public class MainActivity extends AppCompatActivity {
                         .setQuery(PostsRef, Posts.class)
                         .build();
 
-        FirebaseRecyclerAdapter adapter = new FirebaseRecyclerAdapter<Posts, PostsViewHolder>(options) {
+        FirebaseRecyclerAdapter adapter = new FirebaseRecyclerAdapter<Posts, PostsViewHolder>(options)
+        {
             @Override
-            public PostsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            public PostsViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
+            {
                 View view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.all_posts_layout, parent, false);
 
@@ -335,8 +337,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void SendUserToFindFriendsActivity()
     {
-        Intent settingsIntent = new Intent(MainActivity.this, FindFriendsActivity.class);
-        startActivity(settingsIntent);
+        Intent findFriendsIntent = new Intent(MainActivity.this, FindFriendsActivity.class);
+        startActivity(findFriendsIntent);
     }
 
     private void SendUserToProfileActivity()
