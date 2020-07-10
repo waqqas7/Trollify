@@ -182,6 +182,16 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
+                viewHolder.CommentPostButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view)
+                    {
+                        Intent commentsIntent = new Intent(MainActivity.this, CommentsActivity.class);
+                        commentsIntent.putExtra("PostKey", PostKey);
+                        startActivity(commentsIntent);
+                    }
+                });
+
                 viewHolder.LikePostButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view)
