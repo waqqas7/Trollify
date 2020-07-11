@@ -47,6 +47,7 @@ public class PostActivity extends AppCompatActivity {
     private static final int Gallery_Pick = 1;
     private Uri ImageUri;
     private String saveCurrentDate, saveCurrentTime, postRandomName, Description, downloadUrl, current_user_id;
+    private long countPosts = 0;
 
     private StorageReference PostsImagesReference;
     private DatabaseReference UsersRef, PostsRef;
@@ -145,6 +146,24 @@ public class PostActivity extends AppCompatActivity {
     }
 
     private void SavingPostInformationToDatabase() {
+
+        PostsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    countPosts = snapshot.getChildrenCount();
+                }
+                else{
+                    countPosts = 0;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         UsersRef.child(current_user_id).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -160,6 +179,7 @@ public class PostActivity extends AppCompatActivity {
                     postsMap.put("postimage",downloadUrl);
                     postsMap.put("profileimage",userProfileImage);
                     postsMap.put("fullname",userFullName);
+                    postsMap.put("counter",countPosts);
                     PostsRef.child(current_user_id+postRandomName).updateChildren(postsMap)
                             .addOnCompleteListener(new OnCompleteListener() {
                                 @Override
