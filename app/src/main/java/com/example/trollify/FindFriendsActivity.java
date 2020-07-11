@@ -2,6 +2,8 @@ package com.example.trollify;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -92,11 +94,23 @@ public class FindFriendsActivity extends AppCompatActivity
             }
 
             @Override
-            protected void onBindViewHolder(FindFriendsViewHolder holder, int position, FindFriends model)
+            protected void onBindViewHolder(FindFriendsViewHolder holder, final int position, FindFriends model)
             {
                  holder.setFullname(model.getFullname());
                  holder.setStatus(model.getStatus());
                  holder.setProfileimage(model.getProfileimage());
+
+                 holder.mView.setOnClickListener(new View.OnClickListener() {
+                     @Override
+                     public void onClick(View view)
+                     {
+                        String visit_user_id = getRef(position).getKey();
+
+                        Intent personProfileIntent = new Intent(FindFriendsActivity.this, PersonProfileActivity.class);
+                        personProfileIntent.putExtra("visit_user_id", visit_user_id);
+                        startActivity(personProfileIntent);
+                     }
+                 });
             }
 
         };

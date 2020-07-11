@@ -95,14 +95,15 @@ public class CommentsActivity extends AppCompatActivity
     }
 
     @Override
-    protected void onStart() {
-
+    protected void onStart()
+    {
         super.onStart();
 
         FirebaseRecyclerOptions<Comments> options =
                 new FirebaseRecyclerOptions.Builder<Comments>()
                 .setQuery(PostsRef, Comments.class)
                 .build();
+
         FirebaseRecyclerAdapter firebaseRecyclerAdapter =
                 new FirebaseRecyclerAdapter<Comments, CommentsViewHolder>(options)
         {
@@ -115,37 +116,43 @@ public class CommentsActivity extends AppCompatActivity
             }
             @NonNull
             @Override
-            public CommentsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            public CommentsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+            {
                 View view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.all_comments_layout,parent,false);
                 return new CommentsViewHolder(view);
             }
         };
-
-        CommentsList.setAdapter(firebaseRecyclerAdapter);
         firebaseRecyclerAdapter.startListening();
+        CommentsList.setAdapter(firebaseRecyclerAdapter);
     }
 
-    public static class CommentsViewHolder extends RecyclerView.ViewHolder{
+    public static class CommentsViewHolder extends RecyclerView.ViewHolder
+    {
         View mView;
 
-        public CommentsViewHolder(@NonNull View itemView) {
+        public CommentsViewHolder(@NonNull View itemView)
+        {
             super(itemView);
             mView = itemView;
         }
-        public void setUsername(String username) {
+        public void setUsername(String username)
+        {
             TextView myUserName = (TextView) mView.findViewById(R.id.comment_username);
             myUserName.setText("@"+username+" ");
         }
-        public void setComment(String comment) {
+        public void setComment(String comment)
+        {
             TextView myComment = (TextView) mView.findViewById(R.id.comment_text);
             myComment.setText(comment);
         }
-        public void setDate(String date) {
+        public void setDate(String date)
+        {
             TextView myDate = (TextView) mView.findViewById(R.id.comment_date);
             myDate.setText("Date: "+date);
         }
-        public void setTime(String time) {
+        public void setTime(String time)
+        {
             TextView myTime = (TextView) mView.findViewById(R.id.comment_time);
             myTime.setText("Time:"+time);
         }
