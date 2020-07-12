@@ -424,7 +424,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void SendUserToFriendsActivity()
     {
-        Intent friendsIntent = new Intent(MainActivity.this, SettingsActivity.class);
+        Intent friendsIntent = new Intent(MainActivity.this, FriendsActivity.class);
         startActivity(friendsIntent);
     }
 
