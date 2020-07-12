@@ -18,6 +18,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PersonProfileActivity extends AppCompatActivity
@@ -26,10 +29,10 @@ public class PersonProfileActivity extends AppCompatActivity
     private CircleImageView userProfileImage;
     private Button SendFriendReqButton, DeclineFriendReqButton;
 
-    private DatabaseReference FriendReqRef, UsersRef;
+    private DatabaseReference FriendReqRef, UsersRef, FriendsRef;
     private FirebaseAuth mAuth;
     private String senderUserId, receiverUserId, CURRENT_STATE;
-
+    private String saveCurrentDate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -43,6 +46,7 @@ public class PersonProfileActivity extends AppCompatActivity
         receiverUserId = getIntent().getExtras().get("visit_user_id").toString();
         UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
         FriendReqRef = FirebaseDatabase.getInstance().getReference().child("FriendRequests");
+        FriendsRef = FirebaseDatabase.getInstance().getReference().child("Friends");
 
         InitializeFields();
 
@@ -90,16 +94,131 @@ public class PersonProfileActivity extends AppCompatActivity
                 public void onClick(View view) {
                     SendFriendReqButton.setEnabled(false);
 
-                    if (CURRENT_STATE.equals("not_friends")){
+                    if (CURRENT_STATE.equals("not_friends"))
+                    {
                         SendFriendReqToaPerson();
+                    }
+                    if(CURRENT_STATE.equals("request_sent"))
+                    {
+                        CancelFriendRequest();
+                    }
+                    if(CURRENT_STATE.equals("request_received"))
+                    {
+                        AcceptFriendRequest();
+                    }
+                    if(CURRENT_STATE.equals("friends"))
+                    {
+                        UnFriendAnExistingFriend();
                     }
                 }
             });
         }
-        else{
+        else {
             DeclineFriendReqButton.setVisibility(View.INVISIBLE);
             SendFriendReqButton.setVisibility(View.INVISIBLE);
         }
+    }
+
+    private void UnFriendAnExistingFriend()
+    {
+        FriendsRef.child(senderUserId).child(receiverUserId).removeValue()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            FriendsRef.child(receiverUserId).child(senderUserId).removeValue()
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()){
+                                                SendFriendReqButton.setEnabled(true);
+                                                CURRENT_STATE = "not_friends";
+                                                SendFriendReqButton.setText("Send Friend Request");
+
+                                                DeclineFriendReqButton.setVisibility(View.INVISIBLE);
+                                                DeclineFriendReqButton.setEnabled(false);
+                                            }
+                                        }
+                                    });
+                        }
+                    }
+                });
+    }
+
+    private void AcceptFriendRequest()
+    {
+        Calendar calForDate = Calendar.getInstance();
+        SimpleDateFormat currentDate = new SimpleDateFormat("dd-MMM-yyyy");
+        saveCurrentDate = currentDate.format(calForDate.getTime());
+
+        FriendsRef.child(senderUserId).child(receiverUserId).child("date").setValue(saveCurrentDate)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task)
+                    {
+                        if(task.isSuccessful())
+                        {
+                            FriendsRef.child(receiverUserId).child(senderUserId).child("date").setValue(saveCurrentDate)
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task)
+                                        {
+                                            if(task.isSuccessful())
+                                            {
+                                                FriendReqRef.child(senderUserId).child(receiverUserId).removeValue()
+                                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                                if(task.isSuccessful()){
+                                                                    FriendReqRef.child(receiverUserId).child(senderUserId).removeValue()
+                                                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                                @Override
+                                                                                public void onComplete(@NonNull Task<Void> task) {
+                                                                                    if (task.isSuccessful()){
+                                                                                        SendFriendReqButton.setEnabled(true);
+                                                                                        CURRENT_STATE = "friends";
+                                                                                        SendFriendReqButton.setText("Unfriend this Person");
+
+                                                                                        DeclineFriendReqButton.setVisibility(View.INVISIBLE);
+                                                                                        DeclineFriendReqButton.setEnabled(false);
+                                                                                    }
+                                                                                }
+                                                                            });
+                                                                }
+                                                            }
+                                                        });
+                                            }
+                                        }
+                                    });
+                        }
+                    }
+                });
+    }
+
+    private void CancelFriendRequest()
+    {
+        FriendReqRef.child(senderUserId).child(receiverUserId).removeValue()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            FriendReqRef.child(receiverUserId).child(senderUserId).removeValue()
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()){
+                                                SendFriendReqButton.setEnabled(true);
+                                                CURRENT_STATE = "not_friends";
+                                                SendFriendReqButton.setText("Send Friend Request");
+
+                                                DeclineFriendReqButton.setVisibility(View.INVISIBLE);
+                                                DeclineFriendReqButton.setEnabled(false);
+                                            }
+                                        }
+                                    });
+                        }
+                    }
+                });
     }
 
     private void MaintananceofButtons() {
@@ -116,6 +235,43 @@ public class PersonProfileActivity extends AppCompatActivity
                         DeclineFriendReqButton.setVisibility(View.INVISIBLE);
                         DeclineFriendReqButton.setEnabled(false);
                     }
+                    else if(request_type.equals("received"))
+                    {
+                        CURRENT_STATE = "request_received";
+                        SendFriendReqButton.setText("Accept friend Request");
+
+                        DeclineFriendReqButton.setVisibility(View.VISIBLE);
+                        DeclineFriendReqButton.setEnabled(true);
+
+                        DeclineFriendReqButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                CancelFriendRequest();
+                            }
+                        });
+                    }
+                }
+                else
+                {
+                    FriendsRef.child(senderUserId)
+                            .addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if(snapshot.hasChild(receiverUserId))
+                                    {
+                                        CURRENT_STATE = "friends";
+                                        SendFriendReqButton.setText("Unfriend this Person");
+
+                                        DeclineFriendReqButton.setVisibility(View.INVISIBLE);
+                                        DeclineFriendReqButton.setEnabled(false);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
                 }
             }
 
@@ -126,7 +282,8 @@ public class PersonProfileActivity extends AppCompatActivity
         });
     }
 
-    private void SendFriendReqToaPerson() {
+    private void SendFriendReqToaPerson()
+    {
         FriendReqRef.child(senderUserId).child(receiverUserId).child("request_type").setValue("sent")
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
