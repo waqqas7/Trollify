@@ -53,9 +53,9 @@ public class ChatActivity extends AppCompatActivity {
 
     private String messageReceiverID, messageReceiverName, messageSenderID, saveCurrentTime, saveCurrentDate;
 
-    private TextView receiverName;
+    private TextView receiverName, userLastSeen;
     private CircleImageView receiverProfileImage;
-    private DatabaseReference RootRef;
+    private DatabaseReference RootRef, UserRef;
     private FirebaseAuth mAuth;
 
     @Override
@@ -68,6 +68,7 @@ public class ChatActivity extends AppCompatActivity {
         messageSenderID = mAuth.getCurrentUser().getUid();
 
         RootRef = FirebaseDatabase.getInstance().getReference();
+        UserRef = FirebaseDatabase.getInstance().getReference().child("Users");
 
         messageReceiverID = getIntent().getExtras().get("visit_user_id").toString();
         messageReceiverName = getIntent().getExtras().get("userName").toString();
@@ -126,6 +127,8 @@ public class ChatActivity extends AppCompatActivity {
 
     private void SendMessage()
     {
+        updateUserStatus("online");
+
         String messageText = userMessageInput.getText().toString();
 
         if(TextUtils.isEmpty(messageText))
@@ -146,7 +149,7 @@ public class ChatActivity extends AppCompatActivity {
             saveCurrentDate = currentDate.format(calForDate.getTime());
 
             Calendar calForTime = Calendar.getInstance();
-            SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm aa");
+            SimpleDateFormat currentTime = new SimpleDateFormat( "HH:mm aa");
             saveCurrentTime = currentTime.format(calForTime.getTime());
 
             Map messageTextBody = new HashMap();
@@ -179,6 +182,27 @@ public class ChatActivity extends AppCompatActivity {
         }
     }
 
+    public void updateUserStatus(String state)
+    {
+        String saveCurrentDate, saveCurrentTime;
+
+        Calendar calForDate = Calendar.getInstance();
+        SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd, yyyy");
+        saveCurrentDate = currentDate.format(calForDate.getTime());
+
+        Calendar calForTime = Calendar.getInstance();
+        SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm a");
+        saveCurrentTime = currentTime.format(calForTime.getTime());
+
+        Map currentStateMap = new HashMap();
+        currentStateMap.put("time", saveCurrentTime);
+        currentStateMap.put("date", saveCurrentDate);
+        currentStateMap.put("type", state);
+
+        UserRef.child(messageSenderID).child("userState")
+                .updateChildren(currentStateMap);
+    }
+
     private void DisplayReceiverInfo()
     {
         receiverName.setText(messageReceiverName);
@@ -190,6 +214,17 @@ public class ChatActivity extends AppCompatActivity {
                 if(snapshot.exists())
                 {
                     final String profileImage = snapshot.child("profileimage").getValue().toString();
+                    final String type = snapshot.child("userState").child("type").getValue().toString();
+                    final String lastDate = snapshot.child("userState").child("date").getValue().toString();
+                    final String lastTime = snapshot.child("userState").child("time").getValue().toString();
+
+                    if (type.equals("online")){
+                        userLastSeen.setText("online");
+                    }
+                    else{
+                        userLastSeen.setText("last seen:  " + lastTime + "  " + lastDate);
+                    }
+
                     Picasso.get().load(profileImage).placeholder(R.drawable.profile).into(receiverProfileImage);
                 }
             }
@@ -214,6 +249,7 @@ public class ChatActivity extends AppCompatActivity {
         actionBar.setCustomView(action_bar_view);
 
         receiverName = (TextView) findViewById(R.id.custom_profile_name);
+        userLastSeen = (TextView) findViewById(R.id.custom_user_last_seen);
         receiverProfileImage = (CircleImageView) findViewById(R.id.custom_profile_image);
 
         SendMessageButton = (ImageButton) findViewById(R.id.send_message_button);
