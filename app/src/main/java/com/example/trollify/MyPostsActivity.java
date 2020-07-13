@@ -44,7 +44,10 @@ public class MyPostsActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         currentUserID = mAuth.getCurrentUser().getUid();
+
         PostsRef = FirebaseDatabase.getInstance().getReference().child("Posts");
+        UsersRef = FirebaseDatabase.getInstance().getReference().child("Users");
+        LikesRef = FirebaseDatabase.getInstance().getReference().child("Likes");
 
         mToolbar = (Toolbar) findViewById(R.id.my_posts_bar_layout);
         setSupportActionBar(mToolbar);
