@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -124,7 +125,21 @@ public class FriendsActivity extends AppCompatActivity {
                                 if (snapshot.exists()){
                                     final String userName = snapshot.child("fullname").getValue().toString();
                                     final String profileImage = snapshot.child("profileimage").getValue().toString();
+                                    final String type;
 
+                                    if(snapshot.hasChild("userState"))
+                                    {
+                                        type = snapshot.child("userState").child("type").getValue().toString();
+
+                                        if(type.equals("online"))
+                                        {
+                                            holder.onlineStatusView.setVisibility(View.VISIBLE);
+                                        }
+                                        else
+                                        {
+                                            holder.onlineStatusView.setVisibility(View.INVISIBLE);
+                                        }
+                                    }
 
                                     holder.setFullname(userName);
                                     holder.setProfileimage(profileImage);
@@ -185,10 +200,12 @@ public class FriendsActivity extends AppCompatActivity {
     public static class FriendsViewHolder extends RecyclerView.ViewHolder
     {
         View mView;
+        ImageView onlineStatusView;
 
         public FriendsViewHolder(@NonNull View itemView) {
             super(itemView);
             mView = itemView;
+            onlineStatusView = (ImageView) itemView.findViewById(R.id.all_user_online_icon);
         }
 
         public void setProfileimage(String profileimage)
