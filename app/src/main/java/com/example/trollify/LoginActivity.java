@@ -38,6 +38,8 @@ public class  LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private ProgressDialog loadingBar;
 
+    private boolean emailAddressChecker;
+
     private static final int RC_SIGN_IN = 1;
     private GoogleApiClient mGoogleSignInClient;
     private static final String TAG = "LoginActivity";
@@ -199,8 +201,7 @@ public class  LoginActivity extends AppCompatActivity {
                         {
                             if(task.isSuccessful())
                             {
-                                SendUserToMainActivity();
-                                Toast.makeText(LoginActivity.this, "You are logged in successfully...", Toast.LENGTH_SHORT).show();
+                                VerifyEmailAddress();
                                 loadingBar.dismiss();
                             }
                             else
@@ -211,6 +212,22 @@ public class  LoginActivity extends AppCompatActivity {
                             }
                         }
                     });
+        }
+    }
+
+    private void VerifyEmailAddress()
+    {
+        FirebaseUser user = mAuth.getCurrentUser();
+        emailAddressChecker = user.isEmailVerified();
+
+        if(emailAddressChecker)
+        {
+            SendUserToMainActivity();
+        }
+        else
+        {
+            Toast.makeText(this, "Please verify you account first...", Toast.LENGTH_SHORT).show();
+            mAuth.signOut();
         }
     }
 
