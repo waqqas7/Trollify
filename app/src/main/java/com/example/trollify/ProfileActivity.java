@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.renderscript.Sampler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,11 +26,12 @@ public class ProfileActivity extends AppCompatActivity
     private TextView userName, userProfName, userStatus, userCountry, userGender, userRelation, userDOB;
     private CircleImageView userProfileImage;
 
-    private DatabaseReference profileUserRef;
+    private DatabaseReference profileUserRef, FriendsRef, PostsRef;
     private FirebaseAuth mAuth;
     private Button MyPosts, MyFriends;
 
     private String currentUserId;
+    private int countFriends, countPosts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -40,6 +42,8 @@ public class ProfileActivity extends AppCompatActivity
         mAuth = FirebaseAuth.getInstance();
         currentUserId = mAuth.getCurrentUser().getUid();
         profileUserRef = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserId);
+        FriendsRef = FirebaseDatabase.getInstance().getReference().child("Friends");
+        PostsRef = FirebaseDatabase.getInstance().getReference().child("Posts");
 
         userName = (TextView) findViewById(R.id.my_username);
         userProfName = (TextView)findViewById(R.id.my_profile_full_name);
@@ -67,6 +71,45 @@ public class ProfileActivity extends AppCompatActivity
             public void onClick(View view)
             {
                 SendUserToMyPostsActivity();
+            }
+        });
+
+        PostsRef.orderByChild("uid")
+                .startAt(currentUserId).endAt(currentUserId + "\uf8ff")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.exists()){
+                            countPosts = (int) snapshot.getChildrenCount();
+                            MyPosts.setText(Integer.toString(countPosts)+"  Posts");
+                        }
+                        else {
+                            MyPosts.setText("0 Posts");
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+        FriendsRef.child(currentUserId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    countFriends = (int) snapshot.getChildrenCount();
+                    MyFriends.setText(Integer.toString(countFriends) + "  Friends");
+                }
+                else{
+                    MyFriends.setText("0 Friends");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
 

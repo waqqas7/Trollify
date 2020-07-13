@@ -230,8 +230,8 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         };
-        adapter.startListening();
         postList.setAdapter(adapter);
+        adapter.startListening();
     }
 
     public static class PostsViewHolder extends RecyclerView.ViewHolder
