@@ -3,7 +3,10 @@ package com.example.trollify;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -24,6 +27,7 @@ public class ProfileActivity extends AppCompatActivity
 
     private DatabaseReference profileUserRef;
     private FirebaseAuth mAuth;
+    private Button MyPosts, MyFriends;
 
     private String currentUserId;
 
@@ -46,6 +50,25 @@ public class ProfileActivity extends AppCompatActivity
         userDOB = (TextView)findViewById(R.id.my_dob);
 
         userProfileImage = (CircleImageView)findViewById(R.id.my_profile_pic);
+
+        MyFriends = (Button) findViewById(R.id.my_friends_button);
+        MyPosts = (Button) findViewById(R.id.my_post_button);
+
+        MyFriends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                SendUserToFriendsActivity();
+            }
+        });
+
+        MyPosts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                SendUserToMyPostsActivity();
+            }
+        });
 
         profileUserRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -79,5 +102,17 @@ public class ProfileActivity extends AppCompatActivity
 
             }
         });
+    }
+
+    private void SendUserToFriendsActivity()
+    {
+        Intent friendsIntent = new Intent(ProfileActivity.this, FriendsActivity.class);
+        startActivity(friendsIntent);
+    }
+
+    private void SendUserToMyPostsActivity()
+    {
+        Intent myPostsIntent = new Intent(ProfileActivity.this, MyPostsActivity.class);
+        startActivity(myPostsIntent);
     }
 }
