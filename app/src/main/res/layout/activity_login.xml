@@ -92,6 +92,7 @@
         android:textStyle="bold" />
 
     <LinearLayout
+        android:id="@+id/icons_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView2"
@@ -124,10 +125,8 @@
         android:id="@+id/forget_password_link"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="-5dp"
-        android:layout_marginBottom="133dp"
+        android:layout_below="@+id/icons_layout"
+        android:layout_marginTop="8dp"
         android:text="Forget Password"
         android:textAlignment="center"
         android:textColor="@android:color/black"
