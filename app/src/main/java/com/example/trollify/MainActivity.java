@@ -21,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.login.LoginManager;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.navigation.NavigationView;
@@ -443,6 +444,7 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.nav_logout:
                 updateUserStatus("offline");
+                LoginManager.getInstance().logOut();
                 mAuth.signOut();
                 SendUserToLoginActivity();
                 break;
