@@ -256,7 +256,6 @@ public class MainActivity extends AppCompatActivity {
         };
         postList.setAdapter(adapter);
         adapter.startListening();
-        updateUserStatus("online");
     }
 
     public static class PostsViewHolder extends RecyclerView.ViewHolder
@@ -359,8 +358,9 @@ public class MainActivity extends AppCompatActivity {
         if (currentUser == null){
             SendUserToLoginActivity();
         }
-        else{
+        else {
             CheckUserExistence();
+            updateUserStatus("online");
         }
     }
 
@@ -368,8 +368,9 @@ public class MainActivity extends AppCompatActivity {
         final String current_user_id = mAuth.getCurrentUser().getUid();
         UsersRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (!dataSnapshot.hasChild(current_user_id)) {
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+                if (!dataSnapshot.hasChild(current_user_id) || !dataSnapshot.child(current_user_id).hasChild("username")) {
                     SendUserToSetupActivity();
                 }
             }
