@@ -97,7 +97,7 @@ public class SetupActivity extends AppCompatActivity
 
                     }
                     else{
-                        Toast.makeText(SetupActivity.this, "Please select profile image first", Toast.LENGTH_SHORT).show();
+                        UsersRef.child("profileimage").setValue("https://firebasestorage.googleapis.com/v0/b/trollify-7e3cc.appspot.com/o/profile.png?alt=media&token=0c6126d4-1289-465a-8ba6-f8b018ccc369");
                     }
                 }
             }
@@ -182,7 +182,8 @@ public class SetupActivity extends AppCompatActivity
         }
     }
 
-    private void SaveAccountSetupInformation() {
+    private void SaveAccountSetupInformation()
+    {
         String username = UserName.getText().toString();
         String fullname = FullName.getText().toString();
         String country = CountryName.getText().toString();
@@ -207,10 +208,11 @@ public class SetupActivity extends AppCompatActivity
             userMap.put("username",username);
             userMap.put("fullname",fullname);
             userMap.put("country",country);
-            userMap.put("status","Hey there, i am using Poster Social Network, developed by Coding Cafe.");
+            userMap.put("status","Hey there, i am on Trollify !");
             userMap.put("gender","none");
             userMap.put("dob","none");
             userMap.put("relationshipstatus","none");
+
             UsersRef.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener() {
                 @Override
                 public void onComplete(@NonNull Task task) {
