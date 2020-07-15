@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -31,6 +32,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -38,16 +41,34 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.OAuthProvider;
+import com.google.firebase.auth.TwitterAuthProvider;
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.DefaultLogger;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.Twitter;
+import com.twitter.sdk.android.core.TwitterApiClient;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterAuthToken;
+import com.twitter.sdk.android.core.TwitterConfig;
+import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterAuthClient;
+import com.twitter.sdk.android.core.identity.TwitterLoginButton;
+import com.twitter.sdk.android.core.models.User;
 
 import java.util.Arrays;
 import java.util.List;
+
+import retrofit2.Call;
 
 public class  LoginActivity extends AppCompatActivity {
 
     private Button LoginButton;
     private EditText UserEmail, UserPassword;
     private TextView NeedNewAccountLink, ForgetPasswordLink;
-    private ImageView googleSignInButton, fbSignInButton;
+    private ImageView googleSignInButton, fbSignInButton, twitterSignInButton;
     private FirebaseAuth mAuth;
     private ProgressDialog loadingBar;
 
@@ -75,6 +96,8 @@ public class  LoginActivity extends AppCompatActivity {
         loadingBar = new ProgressDialog(this);
         googleSignInButton = (ImageView) findViewById(R.id.google_signin_button);
         fbSignInButton = (ImageView) findViewById(R.id.facebook_signin_button);
+        twitterSignInButton = (ImageView) findViewById(R.id.twitter_signin_button);
+        //mTwitterBtn = (TwitterLoginButton) findViewById(R.id.twitter_login_button);
 
         NeedNewAccountLink.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,6 +119,66 @@ public class  LoginActivity extends AppCompatActivity {
             public void onClick(View view)
             {
                 startActivity(new Intent(LoginActivity.this, ResetPasswordActivity.class));
+            }
+        });
+
+        // Initialize Twitter Login button
+        twitterSignInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                loadingBar.setTitle("Twitter Sign In");
+                loadingBar.setMessage("Please wait, while we are allowing you to login to your Twitter Account...");
+                loadingBar.setCanceledOnTouchOutside(false);
+                loadingBar.show();
+
+                OAuthProvider.Builder provider = OAuthProvider.newBuilder("twitter.com");
+                provider.addCustomParameter("lang", "en");
+                Task<AuthResult> pendingResultTask = mAuth.getPendingAuthResult();
+                if (pendingResultTask != null)
+                {
+                    pendingResultTask.addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                        @Override
+                        public void onSuccess(AuthResult authResult)
+                        {
+                            SendUserToMainActivity();
+                            loadingBar.dismiss();
+                        }
+                    })
+                            .addOnFailureListener(
+                                    new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e)
+                                        {
+                                            SendUserToLoginActivity();
+                                            Toast.makeText(LoginActivity.this, "Not Authenticated : " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                            loadingBar.dismiss();
+                                        }
+                                    });
+                }
+                else
+                {
+                    mAuth.startActivityForSignInWithProvider(LoginActivity.this, provider.build())
+                            .addOnSuccessListener(
+                                    new OnSuccessListener<AuthResult>() {
+                                        @Override
+                                        public void onSuccess(AuthResult authResult)
+                                        {
+                                            SendUserToMainActivity();
+                                            loadingBar.dismiss();
+                                        }
+                                    })
+                            .addOnFailureListener(
+                                    new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e)
+                                        {
+                                            SendUserToLoginActivity();
+                                            Toast.makeText(LoginActivity.this, "To login again, please logout from your twitter account active in the browser", Toast.LENGTH_SHORT).show();
+                                            loadingBar.dismiss();
+                                        }
+                                    });
+                }
             }
         });
 

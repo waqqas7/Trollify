@@ -4,4 +4,6 @@
     <string name="drawer_close"> Drawer Close</string>
     <string name="facebook_app_id">1884838491658322</string>
     <string name="fb_login_protocol_scheme">fb1884838491658322</string>
+    <string name="twitter_api_key">IUytxpvD2Y59BK3FNWAJ9afJw</string>
+    <string name="twitter_api_secret">0poVPbJduHs2hRxlO6sD18RvkR9Cyi9dnUsjOoHDQxlZVK3fcO</string>
 </resources>
