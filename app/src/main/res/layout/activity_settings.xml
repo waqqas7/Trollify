@@ -59,8 +59,7 @@
                 android:hint="Username"
                 android:padding="12dp"
                 android:textColor="@android:color/background_dark"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/settings_profile_full_name"
@@ -74,13 +73,12 @@
                 android:hint="Profile Name"
                 android:padding="12dp"
                 android:textColor="@android:color/background_dark"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textSize="20sp" />
 
-            <EditText
+            <Spinner
                 android:id="@+id/settings_country"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_below="@+id/settings_profile_full_name"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
@@ -88,9 +86,8 @@
                 android:background="@drawable/inputs"
                 android:hint="Country"
                 android:padding="12dp"
-                android:textColor="@android:color/background_dark"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:ems="10"
+                android:spinnerMode="dropdown" />
 
             <EditText
                 android:id="@+id/settings_dob"
@@ -104,13 +101,12 @@
                 android:hint="Date of Birth"
                 android:padding="12dp"
                 android:textColor="@android:color/background_dark"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textSize="20sp" />
 
-            <EditText
+            <Spinner
                 android:id="@+id/settings_gender"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_below="@+id/settings_dob"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
@@ -118,14 +114,13 @@
                 android:background="@drawable/inputs"
                 android:hint="Gender"
                 android:padding="12dp"
-                android:textColor="@android:color/background_dark"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:ems="10"
+                android:spinnerMode="dropdown" />
 
-            <EditText
+            <Spinner
                 android:id="@+id/settings_relationship_status"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_below="@+id/settings_gender"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
@@ -133,9 +128,8 @@
                 android:background="@drawable/inputs"
                 android:hint="Relationship Status"
                 android:padding="12dp"
-                android:textColor="@android:color/background_dark"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:ems="10"
+                android:spinnerMode="dropdown" />
 
             <Button
                 android:id="@+id/update_account_settings_buttons"

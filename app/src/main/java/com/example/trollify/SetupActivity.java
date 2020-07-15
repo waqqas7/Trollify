@@ -6,12 +6,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,13 +35,19 @@ import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SetupActivity extends AppCompatActivity
 {
-    private EditText UserName, FullName, CountryName;
+    private EditText UserName, FullName;
+    private Spinner CountryName;
     private Button SaveInformationButton;
     private CircleImageView ProfileImage;
     private ProgressDialog loadingBar;
@@ -61,11 +72,45 @@ public class SetupActivity extends AppCompatActivity
 
         UserName = (EditText) findViewById(R.id.setup_username);
         FullName = (EditText) findViewById(R.id.setup_full_name);
-        CountryName = (EditText) findViewById(R.id.setup_country_name);
+        CountryName = (Spinner) findViewById(R.id.setup_country_name);
+
+        Locale[] locales = Locale.getAvailableLocales();
+        ArrayList<String> countries = new ArrayList<String>();
+        for (Locale locale : locales) {
+            String country = locale.getDisplayCountry();
+            if (country.trim().length() > 0 && !countries.contains(country)) {
+                countries.add(country);
+            }
+        }
+        Collections.sort(countries);
+        countries.add(0, "Choose your country");
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,countries)
+        {
+            @Override
+            public boolean isEnabled(int position)
+            {
+                if(position == 0)
+                    return false;
+                else
+                    return true;
+            }
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent)
+            {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if(position == 0)
+                    tv.setHintTextColor(Color.GRAY);
+                else
+                    tv.setTextColor(Color.BLACK);
+                return view;
+            }
+        };
+        CountryName.setAdapter(spinnerArrayAdapter);
+
         SaveInformationButton = (Button) findViewById(R.id.setup_information_button);
         ProfileImage = (CircleImageView) findViewById(R.id.setup_profile_image);
         loadingBar = new ProgressDialog(this);
-
 
         SaveInformationButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,7 +177,7 @@ public class SetupActivity extends AppCompatActivity
             {
                 loadingBar.setTitle("Profile Image");
                 loadingBar.setMessage("Please wait, while we are updating your profile image...");
-                loadingBar.setCanceledOnTouchOutside(true);
+                loadingBar.setCanceledOnTouchOutside(false);
                 loadingBar.show();
 
                 final Uri resultUri = result.getUri();
@@ -186,22 +231,17 @@ public class SetupActivity extends AppCompatActivity
     {
         String username = UserName.getText().toString();
         String fullname = FullName.getText().toString();
-        String country = CountryName.getText().toString();
+        String country = CountryName.getSelectedItem().toString();
 
-        if(TextUtils.isEmpty(username)){
-            Toast.makeText(this, "Please write your username...", Toast.LENGTH_SHORT).show();
+        if(TextUtils.isEmpty(username)  || TextUtils.isEmpty(country) || TextUtils.isEmpty(fullname))
+        {
+            Toast.makeText(this, "Please Setup your profile information...", Toast.LENGTH_SHORT).show();
         }
-        if(TextUtils.isEmpty(fullname)){
-            Toast.makeText(this, "Please write your fullname...", Toast.LENGTH_SHORT).show();
-        }
-        if(TextUtils.isEmpty(country)){
-            Toast.makeText(this, "Please write your country...", Toast.LENGTH_SHORT).show();
-        }
-        else{
+        else {
             loadingBar.setTitle("Saving Information");
             loadingBar.setMessage("Please wait, while we are creating your new Account...");
+            loadingBar.setCanceledOnTouchOutside(false);
             loadingBar.show();
-            loadingBar.setCanceledOnTouchOutside(true);
 
 
             HashMap userMap =  new HashMap();

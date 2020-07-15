@@ -4,14 +4,21 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
@@ -32,7 +39,11 @@ import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -40,7 +51,9 @@ public class SettingsActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
 
-    private EditText userName, userProfName, userStatus, userCountry, userGender, userRelation, userDOB;
+    private EditText userName, userProfName, userStatus, userDOB;
+    private Spinner userCountry, userGender, userRelation;
+    private DatePickerDialog datePickerDialog;
     private Button UpdateAccountSettingsButton;
     private CircleImageView userProfImage;
     private ProgressDialog loadingBar;
@@ -72,10 +85,119 @@ public class SettingsActivity extends AppCompatActivity {
         userName = (EditText)findViewById(R.id.settings_username);
         userProfName = (EditText)findViewById(R.id.settings_profile_full_name);
         userStatus = (EditText)findViewById(R.id.settings_status);
-        userCountry = (EditText)findViewById(R.id.settings_country);
-        userGender = (EditText)findViewById(R.id.settings_gender);
-        userRelation = (EditText)findViewById(R.id.settings_relationship_status);
+        userCountry = (Spinner)findViewById(R.id.settings_country);
+        userGender = (Spinner)findViewById(R.id.settings_gender);
+        userRelation = (Spinner)findViewById(R.id.settings_relationship_status);
+
+        String[] genderList = new String[]{"Select your Gender", "male", "female", "others"};
+        ArrayAdapter<String> genderAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, genderList)
+        {
+            @Override
+            public boolean isEnabled(int position)
+            {
+                if(position == 0)
+                    return false;
+                else
+                    return true;
+            }
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent)
+            {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if(position == 0)
+                    tv.setTextColor(Color.GRAY);
+                else
+                    tv.setTextColor(Color.BLACK);
+                return view;
+            }
+        };
+        userGender.setAdapter(genderAdapter);
+
+        String[] relationList = new String[]{"Select Relationship Status", "Single", "Married", "Committed", "Divorced"};
+        ArrayAdapter<String> relationAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, relationList)
+        {
+            @Override
+            public boolean isEnabled(int position)
+            {
+                if(position == 0)
+                    return false;
+                else
+                    return true;
+            }
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent)
+            {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if(position == 0)
+                    tv.setTextColor(Color.GRAY);
+                else
+                    tv.setTextColor(Color.BLACK);
+                return view;
+            }
+        };
+        userRelation.setAdapter(relationAdapter);
+
+        Locale[] locales = Locale.getAvailableLocales();
+        final ArrayList<String> countries = new ArrayList<String>();
+        for (Locale locale : locales) {
+            String country = locale.getDisplayCountry();
+            if (country.trim().length() > 0 && !countries.contains(country)) {
+                countries.add(country);
+            }
+        }
+        Collections.sort(countries);
+        countries.add(0, "Choose your country");
+        ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,countries)
+        {
+            @Override
+            public boolean isEnabled(int position)
+            {
+                if(position == 0)
+                    return false;
+                else
+                    return true;
+            }
+            @Override
+            public View getDropDownView(int position, View convertView, ViewGroup parent)
+            {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView tv = (TextView) view;
+                if(position == 0)
+                    tv.setHintTextColor(Color.GRAY);
+                else
+                    tv.setTextColor(Color.BLACK);
+                return view;
+            }
+        };
+        userCountry.setAdapter(countryAdapter);
+
         userDOB = (EditText)findViewById(R.id.settings_dob);
+        userDOB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                final Calendar c = Calendar.getInstance();
+                int mYear = c.get(Calendar.YEAR); // current year
+                int mMonth = c.get(Calendar.MONTH); // current month
+                int mDay = c.get(Calendar.DAY_OF_MONTH); // current day
+                // date picker dialog
+                datePickerDialog = new DatePickerDialog(SettingsActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+
+                            @Override
+                            public void onDateSet(DatePicker view, int year,
+                                                  int monthOfYear, int dayOfMonth) {
+                                // set day of month , month and year value in the edit text
+                                userDOB.setText(dayOfMonth + "/"
+                                        + (monthOfYear + 1) + "/" + year);
+
+                            }
+                        }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+            }
+        });
 
         userProfImage = (CircleImageView)findViewById(R.id.settings_profile_image);
 
@@ -104,9 +226,9 @@ public class SettingsActivity extends AppCompatActivity {
                     userProfName.setText(myProfileName);
                     userStatus.setText(myProfileStatus);
                     userDOB.setText(myDOB);
-                    userCountry.setText(myCountry);
-                    userGender.setText(myGender);
-                    userRelation.setText(myRelationshipStatus);
+                    userCountry.setSelection(getIndex(userCountry, myCountry));
+                    userGender.setSelection(getIndex(userGender, myGender));
+                    userRelation.setSelection(getIndex(userRelation, myRelationshipStatus));
                 }
             }
 
@@ -135,6 +257,16 @@ public class SettingsActivity extends AppCompatActivity {
                 startActivityForResult(galleryIntent, Gallery_Pick);
             }
         });
+    }
+
+    private int getIndex(Spinner spinner, String myString)
+    {
+        for (int i=0;i<spinner.getCount();i++){
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)){
+                return i;
+            }
+        }
+        return 0;
     }
 
     @Override
@@ -216,9 +348,9 @@ public class SettingsActivity extends AppCompatActivity {
         String profilename = userProfName.getText().toString();
         String status = userStatus.getText().toString();
         String dob = userDOB.getText().toString();
-        String country = userCountry.getText().toString();
-        String gender = userGender.getText().toString();
-        String relation = userRelation.getText().toString();
+        String country = userCountry.getSelectedItem().toString();
+        String gender = userGender.getSelectedItem().toString();
+        String relation = userRelation.getSelectedItem().toString();
 
         if(TextUtils.isEmpty(username))
         {
