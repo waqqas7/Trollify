@@ -14,10 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MyPostsActivity"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".ProfileActivity"></activity>
         <activity
             android:name=".ChatActivity"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".FriendsActivity"></activity>
         <activity android:name=".FriendsActivity" />
         <activity android:name=".PersonProfileActivity" />
         <activity
