@@ -87,6 +87,8 @@ public class ChatActivity extends AppCompatActivity {
                 SendMessage();
             }
         });
+
+
     }
 
     private void FetchMessages()
