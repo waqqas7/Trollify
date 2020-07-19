@@ -2,27 +2,27 @@ package com.example.trollify;
 
 public class Messages
 {
-    public String data, time, type, message, from;
+    public String date, time, type, message, from;
 
     public Messages()
     {
 
     }
 
-    public Messages(String data, String time, String type, String message, String from) {
-        this.data = data;
+    public Messages(String date, String time, String type, String message, String from) {
+        this.date = date;
         this.time = time;
         this.type = type;
         this.message = message;
         this.from = from;
     }
 
-    public String getData() {
-        return data;
+    public String getDate() {
+        return date;
     }
 
-    public void setData(String data) {
-        this.data = data;
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getTime() {
