@@ -28,6 +28,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -77,6 +78,8 @@ public class ChatActivity extends AppCompatActivity {
 
         DisplayReceiverInfo();
 
+        FetchMessages();
+
         SendMessageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
@@ -84,8 +87,6 @@ public class ChatActivity extends AppCompatActivity {
                 SendMessage();
             }
         });
-
-        FetchMessages();
     }
 
     private void FetchMessages()
@@ -95,12 +96,11 @@ public class ChatActivity extends AppCompatActivity {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName)
                     {
-                        if(snapshot.exists())
-                        {
-                            Messages messages = snapshot.getValue(Messages.class);
-                            messagesList.add(messages);
-                            messagesAdapter.notifyDataSetChanged();
-                        }
+                        Messages messages = snapshot.getValue(Messages.class);
+                        messagesList.add(messages);
+                        messagesAdapter.notifyDataSetChanged();
+
+                        userMessagesList.smoothScrollToPosition(userMessagesList.getAdapter().getItemCount());
                     }
 
                     @Override
@@ -127,8 +127,6 @@ public class ChatActivity extends AppCompatActivity {
 
     private void SendMessage()
     {
-        updateUserStatus("online");
-
         String messageText = userMessageInput.getText().toString();
 
         if(TextUtils.isEmpty(messageText))
@@ -182,27 +180,6 @@ public class ChatActivity extends AppCompatActivity {
         }
     }
 
-    public void updateUserStatus(String state)
-    {
-        String saveCurrentDate, saveCurrentTime;
-
-        Calendar calForDate = Calendar.getInstance();
-        SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd, yyyy");
-        saveCurrentDate = currentDate.format(calForDate.getTime());
-
-        Calendar calForTime = Calendar.getInstance();
-        SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm a");
-        saveCurrentTime = currentTime.format(calForTime.getTime());
-
-        Map currentStateMap = new HashMap();
-        currentStateMap.put("time", saveCurrentTime);
-        currentStateMap.put("date", saveCurrentDate);
-        currentStateMap.put("type", state);
-
-        UserRef.child(messageSenderID).child("userState")
-                .updateChildren(currentStateMap);
-    }
-
     private void DisplayReceiverInfo()
     {
         receiverName.setText(messageReceiverName);
@@ -221,8 +198,16 @@ public class ChatActivity extends AppCompatActivity {
                     if (type.equals("online")){
                         userLastSeen.setText("online");
                     }
-                    else{
-                        userLastSeen.setText("last seen:  " + lastTime + "  " + lastDate);
+                    else if(type.equals("Logged Out"))
+                    {
+                        userLastSeen.setText("last seen : " + lastTime + "    " + lastDate);
+                    }
+                    else
+                    {
+                        Calendar cal = Calendar.getInstance();
+                        cal.setTimeInMillis(Long.parseLong(lastTime));
+                        SimpleDateFormat fmt = new SimpleDateFormat("hh:mm a    MMM dd, yyyy");
+                        userLastSeen.setText("last seen : " + fmt.format(cal.getTime()));
                     }
 
                     Picasso.get().load(profileImage).placeholder(R.drawable.profile).into(receiverProfileImage);
@@ -244,6 +229,7 @@ public class ChatActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowCustomEnabled(true);
+
         LayoutInflater layoutInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View action_bar_view = layoutInflater.inflate(R.layout.chat_custom_bar, null);
         actionBar.setCustomView(action_bar_view);
@@ -260,6 +246,7 @@ public class ChatActivity extends AppCompatActivity {
         userMessagesList = (RecyclerView) findViewById(R.id.messages_list_users);
         linearLayoutManager = new LinearLayoutManager(this);
         userMessagesList.setHasFixedSize(true);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         userMessagesList.setLayoutManager(linearLayoutManager);
         userMessagesList.setAdapter(messagesAdapter);
     }

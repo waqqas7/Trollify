@@ -32,11 +32,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -146,6 +149,31 @@ public class MainActivity extends AppCompatActivity {
         });
 
         DisplayAllUsersPosts();
+
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference typeRef = database.getReference().child("Users").child(currentUserID)
+                .child("userState").child("type");
+        final DatabaseReference lastOnlineRef = database.getReference("/Users/"+currentUserID+"/userState/time");
+
+        final DatabaseReference connectedRef = database.getReference(".info/connected");
+        connectedRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                boolean connected = snapshot.getValue(Boolean.class);
+                if (connected) {
+                    typeRef.setValue("online");
+
+                    typeRef.onDisconnect().setValue("offline");
+
+                    lastOnlineRef.onDisconnect().setValue(ServerValue.TIMESTAMP);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Toast.makeText(MainActivity.this, "Error: "+error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void updateUserStatus(String state)
@@ -443,7 +471,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.nav_logout:
-                updateUserStatus("offline");
+                updateUserStatus("Logged Out");
                 LoginManager.getInstance().logOut();
                 mAuth.signOut();
                 SendUserToLoginActivity();
