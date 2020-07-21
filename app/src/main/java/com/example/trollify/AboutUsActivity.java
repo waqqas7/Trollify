@@ -38,7 +38,7 @@ public class AboutUsActivity extends AppCompatActivity {
 
         waqqasInfo.setText("Hi! My name is Waqqas Akhter. I developed this social networking app Trollify with my best friends. I love to code and play games. Hope you enjoy the experience!\nPress the icon below to follow me on GitHub");
         alfrazInfo.setText("Hello! I'm Alfraz Ahmed. I developed this social networking app Trollify with my colleagues. Developing and flirting are two things i am good at. Happy Trolling...\nPress the icon below to follow me on GitHub");
-        afaqInfo.setText("I'm Afaque Alam though i like to go by the name 'Alpha'. Developing this app has truly been an amazing experience for me. I also build video games but I suck at PUBG because it's a shitty game.\nPress the icon below to follow me on GitHub");
+        afaqInfo.setText("I'm Afaque Alam. Developing this app has truly been an amazing experience for me. I also build video games.\nPress the icon below to follow me on GitHub");
 
 
         String waqqasProfImageUrl = "https://firebasestorage.googleapis.com/v0/b/trollify-7e3cc.appspot.com/o/waqqas.jpg?alt=media&token=4763ab57-1c39-4792-a5ea-959bf6aacb58";
