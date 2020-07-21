@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorProfile"
+    tools:context=".AboutUsActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/about_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="About Us"
+                android:layout_marginTop="5dp"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="@android:color/background_light"
+                android:textSize="30sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/developer_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/about_title"
+                android:text="The Developers :"
+                android:layout_marginTop="10dp"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="#E9E9E9"
+                android:textSize="23sp"
+                android:textStyle="bold"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/waqqas_profile_pic"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_below="@+id/developer_title"
+                android:layout_marginTop="50dp"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/profile" />
+
+            <TextView
+                android:id="@+id/waqqas_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Waqqas Info"
+                android:textAllCaps="false"
+                android:layout_toEndOf="@+id/waqqas_profile_pic"
+                android:layout_below="@+id/developer_title"
+                android:layout_marginTop="50dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="2dp"
+                android:textColor="@android:color/background_light"
+                android:textSize="16sp"/>
+
+            <ImageView
+                android:id="@+id/waqqas_git_link"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:padding="6dp"
+                android:elevation="6dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/waqqas_info"
+                android:layout_marginTop="-2.5dp"
+                android:src="@drawable/git"/>
+
+            <ImageView
+                android:src="@drawable/roundedbutton"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:elevation="6dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/waqqas_info"
+                android:layout_marginTop="-2.5dp"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/alfraz_profile_pic"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_below="@+id/waqqas_git_link"
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/profile" />
+
+            <TextView
+                android:id="@+id/alfraz_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Alfraz Info"
+                android:textAllCaps="false"
+                android:layout_toEndOf="@+id/alfraz_profile_pic"
+                android:layout_below="@+id/waqqas_git_link"
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="2dp"
+                android:textColor="@android:color/background_light"
+                android:textSize="16sp"/>
+
+            <ImageView
+                android:id="@+id/alfraz_git_link"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:padding="6dp"
+                android:elevation="6dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/alfraz_info"
+                android:layout_marginTop="-2.5dp"
+                android:src="@drawable/git"/>
+
+            <ImageView
+                android:src="@drawable/roundedbutton"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:elevation="6dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/alfraz_info"
+                android:layout_marginTop="-2.5dp"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/afaq_profile_pic"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_below="@+id/alfraz_git_link"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="31dp"
+                android:src="@drawable/profile" />
+
+            <TextView
+                android:id="@+id/afaq_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Afaque Info"
+                android:textAllCaps="false"
+                android:layout_toEndOf="@+id/afaq_profile_pic"
+                android:layout_below="@+id/alfraz_git_link"
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="2dp"
+                android:textColor="@android:color/background_light"
+                android:textSize="16sp"/>
+
+            <ImageView
+                android:id="@+id/afaq_git_link"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:padding="6dp"
+                android:elevation="6dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/afaq_info"
+                android:layout_marginTop="-2.5dp"
+                android:src="@drawable/git"/>
+
+            <ImageView
+                android:src="@drawable/roundedbutton"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:elevation="6dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/afaq_info"
+                android:layout_marginTop="-2.5dp"/>
+
+            <TextView
+                android:id="@+id/contact_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/afaq_git_link"
+                android:text="Contact Us @ :"
+                android:layout_marginTop="25dp"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="#E9E9E9"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/contact_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="Email : memetrollerz69@gmail.com"
+                android:textAllCaps="false"
+                android:autoLink="email"
+                android:layout_below="@+id/contact_title"
+                android:layout_marginTop="20dp"
+                android:textColor="@android:color/background_light"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/contact_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="Waqqas: 9038373308\n
+                \nAlfraz: 9836309119\n
+                \nAfaque: 9874990734"
+                android:autoLink="phone"
+                android:textAllCaps="false"
+                android:layout_below="@+id/contact_email"
+                android:layout_marginTop="20dp"
+                android:textColor="@android:color/background_light"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/git_repo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="Source Code of this App : https://github.com/waqqas7/Trollify"
+                android:autoLink="web"
+                android:textAllCaps="false"
+                android:layout_below="@+id/contact_phone"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:textColor="@android:color/background_light"
+                android:textSize="16sp"/>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
+
+
+
+

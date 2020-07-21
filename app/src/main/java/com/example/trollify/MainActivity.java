@@ -447,6 +447,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.nav_home:
+                SendUserToMainActivity();
                 Toast.makeText(this, "Home", Toast.LENGTH_SHORT).show();
                 break;
 
@@ -476,7 +477,26 @@ public class MainActivity extends AppCompatActivity {
                 mAuth.signOut();
                 SendUserToLoginActivity();
                 break;
+
+            case R.id.nav_aboutUs:
+                SendUserToAboutUsActivity();
+                Toast.makeText(this, "About Us", Toast.LENGTH_SHORT).show();
+                break;
         }
+    }
+
+    private void SendUserToAboutUsActivity()
+    {
+        Intent aboutUsIntent = new Intent(MainActivity.this, AboutUsActivity.class);
+        startActivity(aboutUsIntent);
+    }
+
+    private void SendUserToMainActivity()
+    {
+        Intent selfIntent = new Intent(MainActivity.this, MainActivity.class);
+        selfIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(selfIntent);
+        finish();
     }
 
     private void SendUserToFriendsActivity()
