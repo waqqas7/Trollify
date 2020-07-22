@@ -292,7 +292,7 @@ public class SettingsActivity extends AppCompatActivity {
             {
                 loadingBar.setTitle("Profile Image");
                 loadingBar.setMessage("Please wait, while we are updating your profile image...");
-                loadingBar.setCanceledOnTouchOutside(true);
+                loadingBar.setCanceledOnTouchOutside(false);
                 loadingBar.show();
 
                 final Uri resultUri = result.getUri();
@@ -384,7 +384,7 @@ public class SettingsActivity extends AppCompatActivity {
         {
             loadingBar.setTitle("Profile Image");
             loadingBar.setMessage("Please wait, while we are updating your profile image...");
-            loadingBar.setCanceledOnTouchOutside(true);
+            loadingBar.setCanceledOnTouchOutside(false);
             loadingBar.show();
 
             UpdateAccountInfo(username, profilename, status, dob, country, gender, relation);

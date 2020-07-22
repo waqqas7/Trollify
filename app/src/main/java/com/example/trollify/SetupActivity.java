@@ -249,9 +249,9 @@ public class SetupActivity extends AppCompatActivity
             userMap.put("fullname",fullname);
             userMap.put("country",country);
             userMap.put("status","Hey there, i am on Trollify !");
-            userMap.put("gender","none");
-            userMap.put("dob","none");
-            userMap.put("relationshipstatus","none");
+            userMap.put("gender","Gender");
+            userMap.put("dob","Date of Birth");
+            userMap.put("relationshipstatus","Relationship Status");
 
             UsersRef.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener() {
                 @Override

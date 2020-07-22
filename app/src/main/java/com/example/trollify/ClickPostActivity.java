@@ -129,7 +129,7 @@ public class ClickPostActivity extends AppCompatActivity {
 
         Dialog dialog = builder.create();
         dialog.show();
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.holo_green_light);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.holo_blue_dark);
     }
 
     private void DeleteCurrentPost()

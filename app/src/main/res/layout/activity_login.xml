@@ -90,6 +90,7 @@
         android:text="or Login with"
         android:textAlignment="center"
         android:textSize="16sp"
+        android:textColor="#b7c9d9"
         android:textStyle="bold" />
 
     <LinearLayout
@@ -136,7 +137,7 @@
         android:layout_marginTop="8dp"
         android:text="Forget Password"
         android:textAlignment="center"
-        android:textColor="@android:color/black"
+        android:textColor="#b7c9d9"
         android:textStyle="bold" />
 
 </RelativeLayout>

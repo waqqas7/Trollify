@@ -362,7 +362,7 @@ public class  LoginActivity extends AppCompatActivity {
         {
             loadingBar.setTitle("Login");
             loadingBar.setMessage("Please wait, while we are logging in to your Account...");
-            loadingBar.setCanceledOnTouchOutside(true);
+            loadingBar.setCanceledOnTouchOutside(false);
             loadingBar.show();
 
             mAuth.signInWithEmailAndPassword(email, password)

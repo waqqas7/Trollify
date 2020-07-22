@@ -166,7 +166,7 @@ public class ChatActivity extends AppCompatActivity {
                         saveCurrentDate = currentDate.format(calForDate.getTime());
 
                         Calendar calForTime = Calendar.getInstance();
-                        SimpleDateFormat currentTime = new SimpleDateFormat( "HH:mm aa");
+                        SimpleDateFormat currentTime = new SimpleDateFormat( "hh:mm a");
                         saveCurrentTime = currentTime.format(calForTime.getTime());
 
                         Map messageTextBody = new HashMap();
@@ -261,7 +261,7 @@ public class ChatActivity extends AppCompatActivity {
             saveCurrentDate = currentDate.format(calForDate.getTime());
 
             Calendar calForTime = Calendar.getInstance();
-            SimpleDateFormat currentTime = new SimpleDateFormat( "HH:mm aa");
+            SimpleDateFormat currentTime = new SimpleDateFormat( "hh:mm a");
             saveCurrentTime = currentTime.format(calForTime.getTime());
 
             Map messageTextBody = new HashMap();

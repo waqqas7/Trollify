@@ -107,8 +107,8 @@ public class PostActivity extends AppCompatActivity {
         {
             loadingBar.setTitle("Add New Post");
             loadingBar.setMessage("Please wait, while we are updating your new post...");
+            loadingBar.setCanceledOnTouchOutside(false);
             loadingBar.show();
-            loadingBar.setCanceledOnTouchOutside(true);
 
             StoringImageToFirebaseStorage();
         }
@@ -121,7 +121,7 @@ public class PostActivity extends AppCompatActivity {
         saveCurrentDate = currentDate.format(calForDate.getTime());
 
         Calendar calForTime = Calendar.getInstance();
-        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss");
+        SimpleDateFormat currentTime = new SimpleDateFormat("hh:mm a");
         saveCurrentTime = currentTime.format(calForTime.getTime());
 
         postRandomName = saveCurrentDate+saveCurrentTime;

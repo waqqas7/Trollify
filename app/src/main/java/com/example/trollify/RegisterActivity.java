@@ -92,8 +92,8 @@ RegisterActivity extends AppCompatActivity
         {
             loadingBar.setTitle("Creating New Account");
             loadingBar.setMessage("Please wait, while we are creating your new Account...");
+            loadingBar.setCanceledOnTouchOutside(false);
             loadingBar.show();
-            loadingBar.setCanceledOnTouchOutside(true);
 
             mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
