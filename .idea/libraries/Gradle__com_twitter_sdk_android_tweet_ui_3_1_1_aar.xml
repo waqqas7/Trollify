@@ -1,14 +1,14 @@
 <component name="libraryTable">
   <library name="Gradle: com.twitter.sdk.android:tweet-ui:3.1.1@aar">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../Social/gradle/caches/transforms-2/files-2.1/444e07eb6201dc8363a20b9d38892a87/jetified-tweet-ui-3.1.1/jars/classes.jar!/" />
-      <root url="file://$PROJECT_DIR$/../Social/gradle/caches/transforms-2/files-2.1/444e07eb6201dc8363a20b9d38892a87/jetified-tweet-ui-3.1.1/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/e774820cb58ee9dc5f7691304478f930/jetified-tweet-ui-3.1.1/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/e774820cb58ee9dc5f7691304478f930/jetified-tweet-ui-3.1.1/res" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://$PROJECT_DIR$/../Social/gradle/caches/modules-2/files-2.1/com.twitter.sdk.android/tweet-ui/3.1.1/3b2793b83c07c1403065d1e4d7619a39b590f1bf/tweet-ui-3.1.1-javadoc.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.twitter.sdk.android/tweet-ui/3.1.1/3b2793b83c07c1403065d1e4d7619a39b590f1bf/tweet-ui-3.1.1-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="jar://$PROJECT_DIR$/../Social/gradle/caches/modules-2/files-2.1/com.twitter.sdk.android/tweet-ui/3.1.1/24a6dc8e1dee1bc36599143997ec7870b77cfa9d/tweet-ui-3.1.1-sources.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.twitter.sdk.android/tweet-ui/3.1.1/24a6dc8e1dee1bc36599143997ec7870b77cfa9d/tweet-ui-3.1.1-sources.jar!/" />
     </SOURCES>
   </library>
 </component>
