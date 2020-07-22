@@ -205,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
                         .setQuery(SortPostsInDescendingOrder, Posts.class)
                         .build();
 
-        FirebaseRecyclerAdapter adapter = new FirebaseRecyclerAdapter<Posts, PostsViewHolder>(options)
+        final FirebaseRecyclerAdapter adapter = new FirebaseRecyclerAdapter<Posts, PostsViewHolder>(options)
         {
             @Override
             public PostsViewHolder onCreateViewHolder(ViewGroup parent, int viewType)

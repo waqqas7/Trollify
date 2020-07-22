@@ -30,7 +30,7 @@ public class ClickPostActivity extends AppCompatActivity {
     private TextView PostDescription;
     private Button DeletePostButton, EditPostButton;
 
-    private DatabaseReference ClickPostRef;
+    private DatabaseReference ClickPostRef, LikesRef;
     private FirebaseAuth mAuth;
 
     private String PostKey,currentUserID,databaseUserID,description,image;
@@ -47,7 +47,7 @@ public class ClickPostActivity extends AppCompatActivity {
 
         PostKey = getIntent().getExtras().get("PostKey").toString();
         ClickPostRef = FirebaseDatabase.getInstance().getReference().child("Posts").child(PostKey);
-
+        LikesRef = FirebaseDatabase.getInstance().getReference().child("Likes").child(PostKey);
 
         PostImage = (ImageView)findViewById(R.id.click_post_image);
         PostDescription = (TextView)findViewById(R.id.click_post_description);
@@ -102,6 +102,13 @@ public class ClickPostActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        SendUserToMainActivity();
+    }
+
     private void EditCurrentPost(String description)
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(ClickPostActivity.this);
@@ -135,6 +142,7 @@ public class ClickPostActivity extends AppCompatActivity {
     private void DeleteCurrentPost()
     {
         ClickPostRef.removeValue();
+        LikesRef.removeValue();
         SendUserToMainActivity();
         Toast.makeText(this, "Post has been deleted", Toast.LENGTH_SHORT).show();
     }
@@ -142,10 +150,6 @@ public class ClickPostActivity extends AppCompatActivity {
     private void SendUserToMainActivity()
     {
         Intent mainIntent = new Intent(ClickPostActivity.this, MainActivity.class);
-        mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(mainIntent);
-        finish();
     }
-
-
 }
