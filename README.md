@@ -5,7 +5,7 @@
 
 Trollify - Our very own Tanti Bagaan Social Networking App. This is a realtime social newtworking mobile android application developed using Java, Node.js & Firebase in Android Studio. Trollify is a fantastic app to connect with your friends and closed ones. Users can share text-based messages and pictures with your Friends. Private chatting is enabled with status and profile fields.
 
-### Link - https://www.mediafire.com/file/an1ewiebp3y08q6/Trollify.apk/file
+### Link - https://drive.google.com/file/d/1TAp2S1SEF_CervG9RpnMlQToOXqxlsC8/view?usp=sharing
 
 ## 🏁 Technology Stack
 
@@ -26,7 +26,7 @@ Trollify - Our very own Tanti Bagaan Social Networking App. This is a realtime s
 ## 🏃‍ Installation
 
 1. Download the apk file from the link below :
-2. Mediafire Link : https://www.mediafire.com/file/an1ewiebp3y08q6/Trollify.apk/file
+2. Drive Link : https://drive.google.com/file/d/1TAp2S1SEF_CervG9RpnMlQToOXqxlsC8/view?usp=sharing
 3. Install the apk file and troll your friends !
 
 ## Developers:
