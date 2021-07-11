@@ -33,7 +33,7 @@ Trollify - Our very own Tanti Bagaan Social Networking App. This is a realtime s
 
 - Waqqas Akhter : https://github.com/waqqas7
 - Alfraz Ahmed : https://github.com/Alfrazgit
-- Afaque Alam : https://github.com/ALPHA-Dev-lab
+- Md Aafaque Alam : https://github.com/Aafaquegit
 
 This app is still in beta. Install and enjoy the features, we would to love hear any feedback from you guys
 
