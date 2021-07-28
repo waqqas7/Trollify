@@ -3,7 +3,7 @@
 ![Trollify Post Feed](https://drive.google.com/uc?export=view&id=17zbzR0aQ4TrgJXqH1R06Ecv2Xa-84qGo) 
 ![Trollify Chat](https://drive.google.com/uc?export=view&id=1jLqrMnaEHtvNH06pw7QxomechiCLS5yf)
 
-Trollify - Our very own Tanti Bagaan Social Networking App. This is a realtime social newtworking mobile android application developed using Java, Node.js & Firebase in Android Studio. Trollify is a fantastic app to connect with your friends and closed ones. Users can share text-based messages and pictures with your Friends. Private chatting is enabled with status and profile fields.
+Trollify - Our very own Tanti Bagaan Social Networking App. This is a realtime social networking mobile android application developed using Java, Node.js & Firebase in Android Studio. Trollify is a fantastic app to connect with your friends and closed ones. Users can share text-based messages and pictures with your Friends. Private chatting is enabled with status and profile fields.
 
 ### Link - https://drive.google.com/file/d/1TAp2S1SEF_CervG9RpnMlQToOXqxlsC8/view?usp=sharing
 
